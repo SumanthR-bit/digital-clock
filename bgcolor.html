@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Changer</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #6C63FF;
+            transition: background-color 0.4s ease;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 40px 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .color-box {
+            padding: 15px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        #colorCode {
+            font-size: 30px;
+            font-weight: bold;
+            color: #222;
+            letter-spacing: 2px;
+        }
+
+        button {
+            border: none;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.04);
+            opacity: 0.9;
+        }
+
+        #changeBtn {
+            background: #222;
+            color: white;
+            width: 100%;
+        }
+
+        #copyBtn {
+            background: #e8e8e8;
+            color: #222;
+            margin-top: 12px;
+            width: 100%;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+            min-height: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Random Color Changer</h1>
+        
+
+        <div class="color-box">
+            <div id="colorCode">#6C63FF</div>
+        </div>
+
+        <button id="changeBtn" onclick="changeColor()">
+            Change Background Color
+        </button>
+
+        <button id="copyBtn" onclick="copyColor()">
+            Copy Color Code
+        </button>
+
+        <div id="message" aria-live="polite"></div>
+    </div>
+
+    <script>
+        function changeColor() {
+            const randomNumber = Math.floor(Math.random() * 16777216);
+            const color = "#" + randomNumber
+                .toString(16)
+                .padStart(6, "0")
+                .toUpperCase();
+
+            document.body.style.backgroundColor = color;
+            document.getElementById("colorCode").textContent = color;
+            document.getElementById("message").textContent = "";
+        }
+
+        async function copyColor() {
+            const color = document.getElementById("colorCode").textContent;
+            const message = document.getElementById("message");
+
+            try {
+                await navigator.clipboard.writeText(color);
+                message.textContent = "Color code copied: " + color;
+            } catch (error) {
+                message.textContent = "Your color code is: " + color;
+            }
+        }
+    </script>
+</body>
+</html>
